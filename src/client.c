@@ -697,7 +697,7 @@ void ssh_disconnect(ssh_session session) {
                          "bds",
                          SSH2_MSG_DISCONNECT,
                          SSH2_DISCONNECT_BY_APPLICATION,
-                         "Bye Bye");
+                         "connection closed");
     if (rc != SSH_OK){
       ssh_set_error_oom(session);
       goto error;
