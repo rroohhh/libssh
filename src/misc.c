@@ -33,10 +33,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#ifdef HAVE_SYS_TIME_H
-#include <sys/time.h>
-#endif /* HAVE_SYS_TIME_H */
-
 #endif /* _WIN32 */
 
 #include <limits.h>
@@ -47,6 +43,10 @@
 #include <sys/types.h>
 #include <ctype.h>
 #include <time.h>
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h>
+#endif /* HAVE_SYS_TIME_H */
+
 
 #ifdef _WIN32
 
@@ -59,9 +59,9 @@
 #include <shlobj.h>
 #include <direct.h>
 
-#if _MSC_VER >= 1400
-# include <io.h>
-#endif /* _MSC_VER */
+#ifdef HAVE_IO_H
+#include <io.h>
+#endif /* HAVE_IO_H */
 
 #endif /* _WIN32 */
 
@@ -289,23 +289,6 @@ int ssh_is_ipaddr(const char *str) {
 }
 
 #endif /* _WIN32 */
-
-#ifndef HAVE_NTOHLL
-uint64_t ntohll(uint64_t a) {
-#ifdef WORDS_BIGENDIAN
-  return a;
-#else /* WORDS_BIGENDIAN */
-  return (((uint64_t)(a) << 56) | \
-         (((uint64_t)(a) << 40) & 0xff000000000000ULL) | \
-         (((uint64_t)(a) << 24) & 0xff0000000000ULL) | \
-         (((uint64_t)(a) << 8)  & 0xff00000000ULL) | \
-         (((uint64_t)(a) >> 8)  & 0xff000000ULL) | \
-         (((uint64_t)(a) >> 24) & 0xff0000ULL) | \
-         (((uint64_t)(a) >> 40) & 0xff00ULL) | \
-         ((uint64_t)(a)  >> 56));
-#endif /* WORDS_BIGENDIAN */
-}
-#endif /* HAVE_NTOHLL */
 
 char *ssh_lowercase(const char* str) {
   char *new, *p;

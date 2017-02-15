@@ -166,7 +166,7 @@ int ssh_options_set_algo(ssh_session session, int algo,
     const char *list) {
   if (!ssh_verify_existing_algo(algo, list)) {
     ssh_set_error(session, SSH_REQUEST_DENIED,
-        "Setting method: no algorithm for method \"%s\" (%s)\n",
+        "Setting method: no algorithm for method \"%s\" (%s)",
         ssh_kex_get_description(algo), list);
     return -1;
   }
@@ -1363,10 +1363,10 @@ static int ssh_bind_set_key(ssh_bind sshbind, char **key_loc,
  *                        with verbosity less than or equal to the
  *                        logging verbosity will be shown.
  *                        - SSH_LOG_NOLOG: No logging
- *                        - SSH_LOG_RARE: Rare conditions or warnings
- *                        - SSH_LOG_ENTRY: API-accessible entrypoints
- *                        - SSH_LOG_PACKET: Packet id and size
- *                        - SSH_LOG_FUNCTIONS: Function entering and leaving
+ *                        - SSH_LOG_WARNING: Only warnings
+ *                        - SSH_LOG_PROTOCOL: High level protocol information
+ *                        - SSH_LOG_PACKET: Lower level protocol infomations, packet level
+ *                        - SSH_LOG_FUNCTIONS: Every function path
  *
  *                      - SSH_BIND_OPTIONS_LOG_VERBOSITY_STR:
  *                        Set the session logging verbosity via a
