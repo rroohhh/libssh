@@ -332,8 +332,10 @@ int ssh_connector_remove_event(ssh_connector connector);
  *    warning C4003: not enough actual parameters for macro '_VA_ARG_N'
  *  and incorrect behavior. This fixes issue.
  */
+#ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
+#endif
 #define VA_APPLY_VARIADIC_MACRO(macro, tuple) macro tuple
 
 #define __VA_NARG__(...) \
@@ -356,7 +358,9 @@ int ssh_connector_remove_event(ssh_connector connector);
         29, 28, 27, 26, 25, 24, 23, 22, 21, 20, \
         19, 18, 17, 16, 15, 14, 13, 12, 11, 10, \
          9,  8,  7,  6,  5,  4,  3,  2,  1,  0
+#ifdef __clang__
 #pragma clang diagnostic pop
+#endif
 #else
 /* clang does not support the above construction */
 #define __VA_NARG__(...) (-1)
